@@ -9,7 +9,6 @@ import {
   minLength,
   maxLength,
 } from "react-admin";
-import { PostEditActions } from "./PostEditActions";
 
 const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
 const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
