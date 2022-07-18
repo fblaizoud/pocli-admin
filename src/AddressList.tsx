@@ -4,7 +4,7 @@ import {
   ListProps,
   ReferenceField,
   TextField,
-} from 'react-admin';
+} from "react-admin";
 
 const AddressList = (props: ListProps) => (
   <List {...props}>
