@@ -7,16 +7,14 @@ import {
 } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
 
-const UserEdit = (props: ListProps) => (
+export const ActivityEdit = (props: ListProps) => (
   <Edit {...props} actions={<PostEditActions />}>
+    {/* Rajoute des boutons personnalisés dans l'écran d'ajout */}
     <SimpleForm>
       <NumberInput source="id" disabled />
-      <TextInput source="firstname" />
-      <TextInput source="lastname" />
-      <TextInput source="email" />
-      <NumberInput source="admin" />
+      <TextInput source="name" />
+      <TextInput source="category" />
+      <TextInput source="shortName" />
     </SimpleForm>
   </Edit>
 );
-
-export default UserEdit;

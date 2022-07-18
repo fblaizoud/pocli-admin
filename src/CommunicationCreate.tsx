@@ -10,6 +10,7 @@ import {
   maxLength,
   ReferenceInput,
   SelectInput,
+  DateInput,
 } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
 
@@ -20,28 +21,29 @@ const validatePostalCode: Validator[] = [
   regex(/^\d{5}$/, "Must be a valid Zip Code"),
 ];
 
-export default interface IUser {
+export default interface IAdmin {
   firstname: string;
   lastname: string;
 }
 
-const optionRenderer = (user: IUser) => `${user.firstname} ${user.lastname}`;
+const optionRenderer = (admin: IAdmin) =>
+  `${admin.firstname} ${admin.lastname}`;
 
-export const AddressCreate = (props: ListProps) => (
+export const CommunicationCreate = (props: ListProps) => (
   <Create
-    title="Rajoutons une adresse" // Rajoute un titre à la page
+    title="Rajoutons une communication" // Rajoute un titre à la page
     actions={<PostEditActions />} // Rajoute des boutons personnalisés dans l'écran d'ajout
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="postalCode" validate={validatePostalCode} />
-      <TextInput source="city" validate={validateCity} />
-      <TextInput source="address1" validate={validateAddress} />
-      <TextInput source="address2" validate={maxLength(255)} />
-      <ReferenceInput source="idUser" reference="users" allowEmpty>
+      <TextInput source="object" />
+      <TextInput source="content" />
+      <DateInput source="date" />
+      <ReferenceInput source="idAdmin" reference="admins" allowEmpty>
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={optionRenderer} />
       </ReferenceInput>
+      <TextInput source="isBanner" />
     </SimpleForm>
   </Create>
 );
