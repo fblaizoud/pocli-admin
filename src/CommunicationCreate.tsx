@@ -3,23 +3,16 @@ import {
   Create,
   SimpleForm,
   TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
   DateInput,
 } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
 
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
+import {
+  validateMediumStringOnly,
+  validateContent,
+} from "./helpers/Validators";
 
 export default interface IAdmin {
   firstname: string;
@@ -36,14 +29,40 @@ export const CommunicationCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="object" />
-      <TextInput source="content" />
-      <DateInput source="date" />
-      <ReferenceInput source="idAdmin" reference="admins" allowEmpty>
+      <TextInput
+        multiline
+        fullWidth
+        source="object"
+        label="Objet"
+        validate={validateMediumStringOnly}
+      />
+      <TextInput
+        fullWidth
+        multiline
+        source="content"
+        label="Contenu"
+        validate={validateContent}
+      />
+      <DateInput source="date" validate={validateContent} />
+      <ReferenceInput
+        label="Administrateur"
+        source="idAdmin"
+        reference="admins"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={optionRenderer} />
       </ReferenceInput>
-      <TextInput source="isBanner" />
+      <SelectInput
+        source="isBanner"
+        label="Affichage"
+        defaultValue={0}
+        validate={validateContent}
+        choices={[
+          { id: "1", name: "Affichage en message d'alerte" },
+          { id: "0", name: "Messagerie personnelle" },
+        ]}
+      />
     </SimpleForm>
   </Create>
 );

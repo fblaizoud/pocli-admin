@@ -2,25 +2,12 @@ import {
   ListProps,
   Create,
   SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
-  DateInput,
   NumberInput,
 } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
+import { validateContent } from "./helpers/Validators";
 
 export interface IFamilyMember {
   firstname: string;
@@ -50,13 +37,19 @@ export const CommunicationMemberCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <ReferenceInput source="idFamily" reference="families" allowEmpty>
+      <ReferenceInput
+        source="idFamily"
+        reference="families"
+        label="Nom"
+        allowEmpty
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={familyRenderer} />
       </ReferenceInput>
       <ReferenceInput
         source="idFamilyMember"
         reference="familyMembers"
+        label="Prénom"
         allowEmpty
       >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
@@ -65,12 +58,22 @@ export const CommunicationMemberCreate = (props: ListProps) => (
       <ReferenceInput
         source="idCommunication"
         reference="communications"
-        allowEmpty
+        label="Communication"
+        validate={validateContent}
       >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={communicationRenderer} />
       </ReferenceInput>
-      <NumberInput source="isOpened" />
+      <NumberInput
+        source="isOpened"
+        defaultValue={0}
+        style={{ display: "none" }}
+      />
+      <NumberInput
+        source="isTrashed"
+        defaultValue={0}
+        style={{ display: "none" }}
+      />
     </SimpleForm>
   </Create>
 );

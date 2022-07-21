@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./index.css";
 import { Admin, Resource, fetchUtils, EditGuesser } from "react-admin";
 import simpleRestProvider from "ra-data-simple-rest";
 import authProvider from "./authProvider";
@@ -16,8 +17,6 @@ import CommunicationList from "./CommunicationList";
 import { CommunicationEdit } from "./CommunicationEdit";
 import { CommunicationCreate } from "./CommunicationCreate";
 import ActivityList from "./ActivityList";
-import { ActivityEdit } from "./ActivityEdit";
-import { ActivityCreate } from "./ActivityCreate";
 import PostTypeList from "./PostTypeList";
 import EventList from "./EventList";
 import { EventCreate } from "./EventCreate";
@@ -49,9 +48,23 @@ import { NewsletterCreate } from "./NewsletterCreate";
 import FamilyMemberEventList from "./FamilyMemberEventList";
 import { FamilyMemberEventEdit } from "./FamilyMemberEventEdit";
 import { FamilyMemberEventCreate } from "./FamilyMemberEventCreate";
-import FamilyMemberActivityList from "./FamilyMemberActivityList";
-import { FamilyMemberActivityEdit } from "./FamilyMemberActivityEdit";
-import { FamilyMemberActivityCreate } from "./FamilyMemberActivityCreate";
+import PeopleIcon from "@mui/icons-material/People";
+import RowingIcon from "@mui/icons-material/Rowing";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
+import FilePresentIcon from "@mui/icons-material/FilePresent";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import ThreePIcon from "@mui/icons-material/ThreeP";
+import EuroIcon from "@mui/icons-material/Euro";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import HandshakeIcon from "@mui/icons-material/Handshake";
+import HealingIcon from "@mui/icons-material/Healing";
+import ArtTrackIcon from "@mui/icons-material/ArtTrack";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
 
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
@@ -71,57 +84,8 @@ const App = () => (
     <Resource
       name="activities"
       list={ActivityList}
-      edit={ActivityEdit}
-      create={ActivityCreate}
-    />
-
-    <Resource
-      name="admins"
-      list={AdminList}
-      edit={AdminEdit}
-      create={AdminCreate}
-    />
-
-    <Resource
-      name="cities"
-      list={CityList}
-      edit={CityEdit}
-      create={CityCreate}
-    />
-
-    <Resource
-      name="communications"
-      list={CommunicationList}
-      edit={CommunicationEdit}
-      create={CommunicationCreate}
-    />
-
-    <Resource
-      name="communicationMembers"
-      list={CommunicationMemberList}
-      edit={CommunicationMemberEdit}
-      create={CommunicationMemberCreate}
-    />
-
-    <Resource
-      name="documents"
-      list={DocumentList}
-      edit={DocumentEdit}
-      create={DocumentCreate}
-    />
-
-    <Resource
-      name="events"
-      list={EventList}
-      edit={EventEdit}
-      create={EventCreate}
-    />
-
-    <Resource
-      name="families"
-      list={FamilyList}
-      edit={FamilyEdit}
-      create={FamilyCreate}
+      options={{ label: "Activités" }}
+      icon={RowingIcon}
     />
 
     <Resource
@@ -129,20 +93,25 @@ const App = () => (
       list={FamilyMemberList}
       edit={FamilyMemberEdit}
       create={FamilyMemberCreate}
+      options={{ label: "Adhérents" }}
+      icon={PeopleIcon}
     />
 
     <Resource
-      name="familyMemberActivities"
-      list={FamilyMemberActivityList}
-      edit={FamilyMemberActivityEdit}
-      create={FamilyMemberActivityCreate}
+      name="admins"
+      list={AdminList}
+      edit={AdminEdit}
+      create={AdminCreate}
+      options={{ label: "Administrateurs" }}
+      icon={AdminPanelSettingsIcon}
     />
 
     <Resource
-      name="familyMemberEvents"
-      list={FamilyMemberEventList}
-      edit={FamilyMemberEventEdit}
-      create={FamilyMemberEventCreate}
+      name="documents"
+      list={DocumentList}
+      edit={DocumentEdit}
+      create={DocumentCreate}
+      icon={DocumentScannerIcon}
     />
 
     <Resource
@@ -150,27 +119,8 @@ const App = () => (
       list={LinkedDocumentList}
       edit={LinkedDocumentEdit}
       create={LinkedDocumentCreate}
-    />
-
-    <Resource
-      name="newsletters"
-      list={NewsletterList}
-      edit={NewsletterEdit}
-      create={NewsletterCreate}
-    />
-
-    <Resource
-      name="partners"
-      list={PartnerList}
-      edit={PartnerEdit}
-      create={PartnerCreate}
-    />
-
-    <Resource
-      name="paymentMethods"
-      list={PaymentMethodList}
-      edit={PaymentMethodEdit}
-      create={PaymentMethodCreate}
+      options={{ label: "Documents liés" }}
+      icon={FilePresentIcon}
     />
 
     <Resource
@@ -178,11 +128,103 @@ const App = () => (
       list={PaymentRecordList}
       edit={PaymentRecordEdit}
       create={PaymentRecordCreate}
+      options={{ label: "Enregistrement adhésion" }}
+      icon={AccountBalanceIcon}
     />
 
-    <Resource name="postTypes" list={PostTypeList} />
+    <Resource
+      name="events"
+      list={EventList}
+      edit={EventEdit}
+      create={EventCreate}
+      options={{ label: "Evènements" }}
+      icon={CelebrationIcon}
+    />
 
-    <Resource name="recipients" list={RecipientList} />
+    <Resource
+      name="families"
+      list={FamilyList}
+      edit={FamilyEdit}
+      create={FamilyCreate}
+      options={{ label: "Familles" }}
+      icon={FamilyRestroomIcon}
+    />
+
+    <Resource
+      name="familyMemberEvents"
+      list={FamilyMemberEventList}
+      edit={FamilyMemberEventEdit}
+      create={FamilyMemberEventCreate}
+      options={{ label: "Inscriptions évènements" }}
+      icon={HowToRegIcon}
+    />
+
+    <Resource
+      name="communications"
+      list={CommunicationList}
+      edit={CommunicationEdit}
+      create={CommunicationCreate}
+      options={{ label: "Messages" }}
+      icon={MailOutlineIcon}
+    />
+
+    <Resource
+      name="communicationMembers"
+      list={CommunicationMemberList}
+      edit={CommunicationMemberEdit}
+      create={CommunicationMemberCreate}
+      options={{ label: "Messages adhérents" }}
+      icon={ThreePIcon}
+    />
+
+    <Resource
+      name="paymentMethods"
+      list={PaymentMethodList}
+      edit={PaymentMethodEdit}
+      create={PaymentMethodCreate}
+      options={{ label: "Moyens de paiement" }}
+      icon={EuroIcon}
+    />
+
+    <Resource
+      name="newsletters"
+      list={NewsletterList}
+      edit={NewsletterEdit}
+      create={NewsletterCreate}
+      icon={NewspaperIcon}
+    />
+
+    <Resource
+      name="partners"
+      list={PartnerList}
+      edit={PartnerEdit}
+      create={PartnerCreate}
+      options={{ label: "Partenaires" }}
+      icon={HandshakeIcon}
+    />
+
+    <Resource
+      name="recipients"
+      list={RecipientList}
+      options={{ label: "Raisons sociales" }}
+      icon={HealingIcon}
+    />
+
+    <Resource
+      name="postTypes"
+      list={PostTypeList}
+      options={{ label: "Types de publication" }}
+      icon={ArtTrackIcon}
+    />
+
+    <Resource
+      name="cities"
+      list={CityList}
+      edit={CityEdit}
+      create={CityCreate}
+      options={{ label: "Villes" }}
+      icon={LocationCityIcon}
+    />
   </Admin>
 );
 

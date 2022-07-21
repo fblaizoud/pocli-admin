@@ -5,8 +5,8 @@ const CityList = (props: ListProps) => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="name" />
-      <TextField source="zipCode" />
+      <TextField source="name" label="Nom" />
+      <TextField source="zipCode" label="Code postal" />
     </Datagrid>
   </List>
 );

@@ -3,29 +3,11 @@ import {
   Create,
   SimpleForm,
   TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
-  ReferenceInput,
-  SelectInput,
   NumberInput,
 } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
 
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
-
-export default interface IUser {
-  firstname: string;
-  lastname: string;
-}
-
-// const optionRenderer = (user: IUser) => `${user.firstname} ${user.lastname}`;
+import { validateCityName, validatePostalCode } from "./helpers/Validators";
 
 export const CityCreate = (props: ListProps) => (
   <Create
@@ -34,8 +16,12 @@ export const CityCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="city" validate={validatePostalCode} />
-      <NumberInput source="zipCode" validate={validateCity} />
+      <TextInput source="name" label="Nom" validate={validateCityName} />
+      <NumberInput
+        source="zipCode"
+        label="Code postal"
+        validate={validatePostalCode}
+      />
     </SimpleForm>
   </Create>
 );

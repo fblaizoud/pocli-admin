@@ -2,25 +2,14 @@ import {
   ListProps,
   Create,
   SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
   DateInput,
   NumberInput,
+  FormDataConsumer,
 } from "react-admin";
+import { validateContent, validateNumber } from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export interface IFamily {
   name: string;
@@ -52,35 +41,65 @@ export const PaymentRecordCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <NumberInput source="id" disabled />
-      <ReferenceInput source="idFamily" reference="families" allowEmpty>
+      <ReferenceInput
+        source="idFamily"
+        reference="families"
+        label="Famille"
+        allowEmpty
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={familyRenderer} />
       </ReferenceInput>
+
       <ReferenceInput
         source="idFamilyMember"
         reference="familyMember"
+        label="Adhérent"
         allowEmpty
       >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={familyMemberRenderer} />
       </ReferenceInput>
-      <ReferenceInput source="idActivity" reference="activities" allowEmpty>
+      <ReferenceInput
+        source="idActivity"
+        reference="activities"
+        label="Activité"
+        allowEmpty
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={activityRenderer} />
       </ReferenceInput>
       <ReferenceInput
         source="idPaymentMethod"
         reference="paymentMethods"
-        allowEmpty
+        label="Moyen de paiement"
       >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={paymentMethodRenderer} />
       </ReferenceInput>
-      <NumberInput source="checkNumber" />
-      <NumberInput source="amount" />
-      <DateInput source="dateStart" />
-      <DateInput source="dateEnd" />
+      <FormDataConsumer>
+        {({ formData, ...rest }) =>
+          formData.idPaymentMethod === 11 && (
+            <NumberInput
+              source="checkNumber"
+              label="N° de chèque"
+              validate={validateContent}
+              {...rest}
+            />
+          )
+        }
+      </FormDataConsumer>
+      <NumberInput source="amount" label="Montant" validate={validateNumber} />
+      <DateInput
+        source="dateStart"
+        label="Date de début"
+        validate={validateContent}
+      />
+      <DateInput
+        source="dateEnd"
+        label="Date de fin"
+        validate={validateContent}
+      />
     </SimpleForm>
   </Create>
 );
