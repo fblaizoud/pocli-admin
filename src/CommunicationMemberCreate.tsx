@@ -74,6 +74,16 @@ export const CommunicationMemberCreate = (props: ListProps) => (
         defaultValue={0}
         style={{ display: "none" }}
       />
+      <SelectInput
+        source="isBanner"
+        label="Affichage"
+        defaultValue={0}
+        validate={validateContent}
+        choices={[
+          { id: "1", name: "Affichage en message d'alerte" },
+          { id: "0", name: "Messagerie personnelle" },
+        ]}
+      />
     </SimpleForm>
   </Create>
 );

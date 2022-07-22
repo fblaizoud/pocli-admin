@@ -29,8 +29,7 @@ export interface ICommunication {
   content: string;
   date: string;
 }
-
-const familyMembersRenderer = (familyMember: IFamilyMember) =>
+const familyMemberRenderer = (familyMember: IFamilyMember) =>
   `${familyMember.firstname}`;
 
 const familyRenderer = (family: IFamily) => `${family.name}`;
@@ -40,21 +39,6 @@ const communicationRenderer = (communication: ICommunication) =>
 export const CommunicationMemberEdit = (props: ListProps) => {
   const [value, setValue] = useState(1);
   const [members, setMembers] = useState([]);
-
-  // useEffect(()=> {
-
-  //   const getContent = async () => {
-  //     const data = await axios.get('http://localhost:3001/api/familyMembers'),
-  //     // setMembers(data);
-  //     console.log(data)
-  //   }
-
-  //   getContent();
-
-  // }, []);
-
-  // const members = (members) =>
-  //   members.map((member) => ({ id: member, name: member }));
 
   return (
     <Edit {...props} actions={<PostEditActions />}>
@@ -72,42 +56,14 @@ export const CommunicationMemberEdit = (props: ListProps) => {
           {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
           <SelectInput optionText={familyRenderer} />
         </ReferenceInput>
-
-        <FormDataConsumer>
-          {({ formData, scopedFormData, getSource, ...rest }) => {
-            console.log(formData.idFamily);
-            console.log(scopedFormData);
-            // console.log(getSource("firstname"));
-            return (
-              <ReferenceInput
-                source="idFamilyMember"
-                reference="familyMembers"
-                label="adherent"
-                // choices={
-                //   !formData.idFamily ||
-                //   members.filter(
-                //     (member) => member.idFamily === formData.idFamily
-                //   )
-                // }
-                validate={validateContent}
-                {...rest}
-              >
-                {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
-                <SelectInput optionText={familyMembersRenderer} />
-              </ReferenceInput>
-            );
-          }}
-        </FormDataConsumer>
-
         <ReferenceInput
-          label="Prénom"
-          source="name"
+          source="idFamilyMember"
           reference="familyMembers"
-          filterToQuery={(search) => ({ search, value })}
+          label="Prénom"
           allowEmpty
         >
           {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
-          <SelectInput optionText={familyMembersRenderer} />
+          <SelectInput optionText={familyMemberRenderer} />
         </ReferenceInput>
 
         <ReferenceInput
@@ -119,6 +75,8 @@ export const CommunicationMemberEdit = (props: ListProps) => {
           {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
           <SelectInput optionText={communicationRenderer} />
         </ReferenceInput>
+        <NumberInput source="isOpened" defaultValue={0} />
+        <NumberInput source="isTrashed" defaultValue={0} />
       </SimpleForm>
     </Edit>
   );

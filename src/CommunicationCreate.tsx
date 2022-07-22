@@ -53,16 +53,6 @@ export const CommunicationCreate = (props: ListProps) => (
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={optionRenderer} />
       </ReferenceInput>
-      <SelectInput
-        source="isBanner"
-        label="Affichage"
-        defaultValue={0}
-        validate={validateContent}
-        choices={[
-          { id: "1", name: "Affichage en message d'alerte" },
-          { id: "0", name: "Messagerie personnelle" },
-        ]}
-      />
     </SimpleForm>
   </Create>
 );
