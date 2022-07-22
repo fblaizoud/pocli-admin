@@ -5,23 +5,35 @@ import {
   ListProps,
   ReferenceField,
   TextField,
+  UrlField,
+  NumberField,
 } from "react-admin";
+import BooleanNumField from "./helpers/BooleanNumField";
 
 const EventList = (props: ListProps) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="numberParticipantsMax" />
+      <TextField
+        source="numberParticipantsMax"
+        label="Limite de participants"
+      />
       <DateField source="date" />
       <TextField source="description" />
-      <TextField source="text" />
-      <TextField source="podcastLink" />
-      <TextField source="reservedAdherent" />
-      <TextField source="price" />
-
+      <TextField source="text" label="Texte" />
+      <UrlField source="podcastLink" label="Lien podcast" />
+      <BooleanNumField
+        source="reservedAdherent"
+        label="Reservé aux adhérents"
+      />
+      <NumberField
+        source="price"
+        label="Prix"
+        options={{ style: "currency", currency: "EUR" }}
+      />
       <ReferenceField
-        label="PostType"
+        label="Type de publication"
         source="idPostType"
         reference="postTypes"
       >
@@ -30,14 +42,12 @@ const EventList = (props: ListProps) => (
         </>
       </ReferenceField>
       <ReferenceField
-        label="Activity"
+        label="Nom d'activité"
         source="idActivity"
         reference="activities"
       >
         <>
-          <TextField source="name" />
-          <TextField source="category" />
-          <TextField source="shortName" />
+          "<TextField source="name" />" / <TextField source="category" />
         </>
       </ReferenceField>
     </Datagrid>

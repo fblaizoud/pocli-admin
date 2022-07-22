@@ -4,8 +4,8 @@ const PaymentMethodList = (props: ListProps) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="name" />
+
+      <TextField source="name" label="Moyen de paiement" />
     </Datagrid>
   </List>
 );

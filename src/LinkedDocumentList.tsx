@@ -4,7 +4,7 @@ import {
   ListProps,
   ReferenceField,
   TextField,
-  NumberField,
+  ImageField,
   DateField,
 } from "react-admin";
 
@@ -20,33 +20,31 @@ const LinkedDocumentList = (props: ListProps) => (
       >
         <>
           <TextField source="name" />
-          <TextField source="url" />
+          <ImageField source="url" />
         </>
       </ReferenceField>
 
-      <ReferenceField label="Event" source="idEvent" reference="events">
+      <ReferenceField label="Evènement" source="idEvent" reference="events">
         <>
-          <TextField source="description" />
-          <DateField source="date" />
+          <DateField source="date" /> - <TextField source="description" />
         </>
       </ReferenceField>
       <ReferenceField
-        label="Communication"
+        label="Message"
         source="idCommunication"
         reference="communications"
       >
         <>
-          <TextField source="object" />
-          <DateField source="date" />
+          <DateField source="date" /> - <TextField source="object" />
         </>
       </ReferenceField>
-      <ReferenceField label="Family" source="idFamily" reference="families">
+      <ReferenceField label="Famille" source="idFamily" reference="families">
         <>
           <TextField source="name" />
         </>
       </ReferenceField>
       <ReferenceField
-        label="FamilyMember"
+        label="Adhérent"
         source="idFamilyMember"
         reference="familyMembers"
       >

@@ -4,9 +4,9 @@ import {
   ListProps,
   ReferenceField,
   TextField,
-  NumberField,
   DateField,
 } from "react-admin";
+import BooleanNumField from "./helpers/BooleanNumField";
 
 const CommunicationMemberList = (props: ListProps) => (
   <List {...props}>
@@ -14,7 +14,7 @@ const CommunicationMemberList = (props: ListProps) => (
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
       <ReferenceField
-        label="FamilyMember"
+        label="Prénom"
         source="idFamilyMember"
         reference="familyMembers"
       >
@@ -22,23 +22,22 @@ const CommunicationMemberList = (props: ListProps) => (
           <TextField source="firstname" />
         </>
       </ReferenceField>
-      <ReferenceField label="Family" source="idFamily" reference="families">
+      <ReferenceField label="Nom" source="idFamily" reference="families">
         <>
           <TextField source="name" />
         </>
       </ReferenceField>
       <ReferenceField
-        label="Communication"
+        label="Message"
         source="idCommunication"
         reference="communications"
       >
         <>
-          <TextField source="object" />
+          <DateField source="date" /> - <TextField source="object" /> -{" "}
           <TextField source="content" />
-          <DateField source="date" />
         </>
       </ReferenceField>
-      <NumberField source="isOpened" />
+      <BooleanNumField source="isOpened" label="Ouvert" />
     </Datagrid>
   </List>
 );

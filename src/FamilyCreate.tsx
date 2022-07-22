@@ -4,22 +4,18 @@ import {
   SimpleForm,
   TextInput,
   NumberInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
 } from "react-admin";
+import {
+  validateContent,
+  validateEmail,
+  validateLongStringOnly,
+  validateMediumStringOnly,
+  validateNumber,
+  validatePassword,
+} from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export interface ICity {
   name: string;
@@ -40,19 +36,47 @@ export const FamilyCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="name" />
-      <NumberInput source="streetNumber" />
-      <TextInput source="address" />
-      <NumberInput source="phoneNumber" />
-      <TextInput source="mail" />
-      <TextInput source="password" />
-      <NumberInput source="idCity" />
-      <NumberInput source="idRecipient" />
-      <ReferenceInput source="idCity" reference="cities" allowEmpty>
+      <TextInput
+        source="name"
+        label="Nom"
+        validate={validateMediumStringOnly}
+      />
+      <NumberInput
+        source="streetNumber"
+        label="N° de voie"
+        validate={validateNumber}
+      />
+      <TextInput
+        source="address"
+        label="Adresse"
+        validate={validateLongStringOnly}
+      />
+      <NumberInput
+        source="phoneNumber"
+        label="N° de téléphone"
+        validate={validateNumber}
+      />
+      <TextInput source="email" validate={validateEmail} />
+      <TextInput
+        source="password"
+        validate={validatePassword}
+        label="Mot de passe"
+      />
+      <ReferenceInput
+        source="idCity"
+        reference="cities"
+        label="Ville"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={cityRenderer} />
       </ReferenceInput>
-      <ReferenceInput source="idRecipient" reference="recipients" allowEmpty>
+      <ReferenceInput
+        source="idRecipient"
+        reference="recipients"
+        label="Régime social"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={recipientRenderer} />
       </ReferenceInput>

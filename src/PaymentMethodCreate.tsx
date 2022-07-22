@@ -1,19 +1,6 @@
-import {
-  ListProps,
-  Create,
-  SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
-  ReferenceInput,
-  SelectInput,
-} from "react-admin";
+import { ListProps, Create, SimpleForm, TextInput } from "react-admin";
+import { validateContent } from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-// const optionRenderer = (user: IUser) => `${user.firstname} ${user.lastname}`;
 
 export const PaymentMethodCreate = (props: ListProps) => (
   <Create
@@ -22,7 +9,11 @@ export const PaymentMethodCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="name" />
+      <TextInput
+        source="name"
+        label="Moyen de paiement"
+        validate={validateContent}
+      />
     </SimpleForm>
   </Create>
 );

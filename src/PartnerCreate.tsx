@@ -1,23 +1,6 @@
-import {
-  ListProps,
-  Create,
-  SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
-  ReferenceInput,
-  SelectInput,
-} from "react-admin";
+import { ListProps, Create, SimpleForm, TextInput } from "react-admin";
+import { validateContent, validateUrl } from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export const PartnerCreate = (props: ListProps) => (
   <Create
@@ -26,9 +9,13 @@ export const PartnerCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="name" />
-      <TextInput source="logo" />
-      <TextInput source="url" />
+      <TextInput
+        source="name"
+        label="Raison sociale"
+        validate={validateContent}
+      />
+      <TextInput source="logo" label="Lien logo" validate={validateContent} />
+      <TextInput source="link" label="Lien site web" validate={validateUrl} />
     </SimpleForm>
   </Create>
 );
