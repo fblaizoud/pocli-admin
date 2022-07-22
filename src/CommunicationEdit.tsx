@@ -10,6 +10,11 @@ import {
 } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
 
+import {
+  validateMediumStringOnly,
+  validateContent,
+} from "./helpers/Validators";
+
 export default interface IAdmin {
   firstname: string;
   lastname: string;
@@ -23,14 +28,30 @@ export const CommunicationEdit = (props: ListProps) => (
     {/* Rajoute des boutons personnalisés dans l'écran d'ajout */}
     <SimpleForm>
       <NumberInput source="id" disabled />
-      <TextInput source="object" />
-      <TextInput source="content" />
-      <DateInput source="date" />
-      <ReferenceInput source="idAdmin" reference="admins" allowEmpty>
+      <TextInput
+        fullWidth
+        multiline
+        source="object"
+        label="Objet"
+        validate={validateMediumStringOnly}
+      />
+      <TextInput
+        multiline
+        fullWidth
+        source="content"
+        label="Contenu"
+        validate={validateContent}
+      />
+      <DateInput source="date" validate={validateContent} />
+      <ReferenceInput
+        label="Administrateur"
+        source="idAdmin"
+        reference="admins"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={optionRenderer} />
       </ReferenceInput>
-      <NumberInput source="isBanner" />
     </SimpleForm>
   </Edit>
 );

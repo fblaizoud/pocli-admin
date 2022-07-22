@@ -12,15 +12,15 @@ import {
 const FamilyMemberList = (props: ListProps) => (
   <List {...props}>
     <Datagrid rowClick="edit">
-      <TextField source="id" />
+      <TextField source="idFamily" />
       {/*  sortBy="addresses.id_address" /> */}
-      <ReferenceField label="Family" source="idFamily" reference="families">
+      <ReferenceField label="Famille" source="idFamily" reference="families">
         <>
           <TextField source="name" />
         </>
       </ReferenceField>
-      <TextField source="firstname" />
-      <DateField source="birthday" />
+      <TextField source="firstname" label="Prénom" />
+      <DateField source="birthday" label="Date d'anniversaire" />
       <TextField source="avatar" />
     </Datagrid>
   </List>

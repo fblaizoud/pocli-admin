@@ -2,25 +2,12 @@ import {
   ListProps,
   Create,
   SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
-  DateInput,
-  NumberInput,
 } from "react-admin";
+import transformDate from "./helpers/transformDate";
+import { validateContent } from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export interface IFamilyMember {
   firstname: string;
@@ -34,7 +21,8 @@ export interface IEvent {
 const familyMemberRenderer = (familyMember: IFamilyMember) =>
   `${familyMember.firstname}`;
 
-const eventRenderer = (event: IEvent) => `${event.date} ${event.description}`;
+const eventRenderer = (event: IEvent) =>
+  `${transformDate(event.date)} ${event.description}`;
 
 export const FamilyMemberEventCreate = (props: ListProps) => (
   <Create
@@ -46,12 +34,18 @@ export const FamilyMemberEventCreate = (props: ListProps) => (
       <ReferenceInput
         source="idFamilyMember"
         reference="familyMembers"
-        allowEmpty
+        label="Adhérent"
+        validate={validateContent}
       >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={familyMemberRenderer} />
       </ReferenceInput>
-      <ReferenceInput source="idEvent" reference="events" allowEmpty>
+      <ReferenceInput
+        source="idEvent"
+        reference="events"
+        label="Evènement"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={eventRenderer} />
       </ReferenceInput>

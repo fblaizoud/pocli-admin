@@ -5,6 +5,7 @@ import {
   ReferenceField,
   TextField,
   EmailField,
+  NumberField,
 } from "react-admin";
 
 const FamilyList = (props: ListProps) => (
@@ -12,19 +13,18 @@ const FamilyList = (props: ListProps) => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="name" />
-      <TextField source="streetNumber" />
-      <TextField source="address" />
+      <TextField source="name" label="Nom" />
+      <TextField source="streetNumber" label="N° de voie" />
+      <TextField source="address" label="Adresse" />
+      <NumberField source="phoneNumber" label="N° de téléphone" />
       <EmailField source="email" />
-
-      <ReferenceField label="City" source="idCity" reference="cities">
+      <ReferenceField label="Ville" source="idCity" reference="cities">
         <>
           <TextField source="name" /> <TextField source="zipCode" />
         </>
       </ReferenceField>
-      <TextField source="password" />
       <ReferenceField
-        label="Recipient"
+        label="Régime social"
         source="idRecipient"
         reference="recipients"
       >

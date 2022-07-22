@@ -1,11 +1,11 @@
-import { Datagrid, List, ListProps, TextField } from "react-admin";
+import { Datagrid, List, ListProps, TextField, EmailField } from "react-admin";
 
 const NewsletterList = (props: ListProps) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="email" />
+      <EmailField source="email" />
     </Datagrid>
   </List>
 );

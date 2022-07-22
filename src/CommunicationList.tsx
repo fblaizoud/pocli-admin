@@ -4,20 +4,23 @@ import {
   ListProps,
   ReferenceField,
   TextField,
-  NumberField,
   DateField,
 } from "react-admin";
+import BooleanNumField from "./helpers/BooleanNumField";
 
 const CommunicationList = (props: ListProps) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="object" />
-      <TextField source="content" />
+      <TextField source="object" label="Objet" />
+      <TextField source="content" label="Contenu" />
       <DateField source="date" />
-      <NumberField source="isBanner" />
-      <ReferenceField label="Admin" source="idAdmin" reference="admins">
+      <BooleanNumField source="isBanner" label="Affichage bannière" />
+      <ReferenceField
+        label="Administrateur"
+        source="idAdmin"
+        reference="admins"
+      >
         <>
           <TextField source="firstname" /> <TextField source="lastname" />{" "}
           <TextField source="email" />

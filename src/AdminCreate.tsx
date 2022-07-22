@@ -1,22 +1,10 @@
-import {
-  ListProps,
-  Create,
-  SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
-} from "react-admin";
+import { ListProps, Create, SimpleForm, TextInput } from "react-admin";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
+import {
+  validateMediumStringOnly,
+  validateEmail,
+  validatePassword,
+} from "./helpers/Validators";
 
 export const AdminCreate = (props: ListProps) => (
   <Create
@@ -25,10 +13,22 @@ export const AdminCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="firstname" />
-      <TextInput source="lastname" />
-      <TextInput source="email" />
-      <TextInput source="password" />
+      <TextInput
+        source="firstname"
+        label="Prénom"
+        validate={validateMediumStringOnly}
+      />
+      <TextInput
+        source="lastname"
+        label="Nom"
+        validate={validateMediumStringOnly}
+      />
+      <TextInput source="email" validate={validateEmail} />
+      <TextInput
+        source="password"
+        label="Mot de passe"
+        validate={validatePassword}
+      />
     </SimpleForm>
   </Create>
 );

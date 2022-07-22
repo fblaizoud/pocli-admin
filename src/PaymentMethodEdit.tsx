@@ -1,19 +1,15 @@
-import {
-  Edit,
-  ListProps,
-  maxLength,
-  NumberInput,
-  SimpleForm,
-  TextInput,
-} from "react-admin";
+import { Edit, ListProps, maxLength, SimpleForm, TextInput } from "react-admin";
+import { validateContent } from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
 
 const PaymentMethodEdit = (props: ListProps) => (
   <Edit {...props} actions={<PostEditActions />}>
-    {/* Rajoute des boutons personnalisés dans l'écran d'ajout */}
     <SimpleForm>
-      <NumberInput source="id" disabled />
-      <TextInput source="name" />
+      <TextInput
+        source="name"
+        label="Moyen de paiement"
+        validate={validateContent}
+      />
     </SimpleForm>
   </Edit>
 );

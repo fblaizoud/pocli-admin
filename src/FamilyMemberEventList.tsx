@@ -14,18 +14,26 @@ const FamilyMemberEventList = (props: ListProps) => (
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
       <ReferenceField
-        label="FamilyMember"
+        label="Adhérent"
         source="idFamilyMember"
         reference="familyMembers"
       >
         <>
-          <TextField source="firstname" />
+          <TextField source="firstname" />{" "}
+          <ReferenceField
+            label="Famille"
+            source="idFamily"
+            reference="families"
+          >
+            <>
+              <TextField source="name" />
+            </>
+          </ReferenceField>
         </>
       </ReferenceField>
-      <ReferenceField label="Event" source="idEvent" reference="events">
+      <ReferenceField label="Evènement" source="idEvent" reference="events">
         <>
-          <TextField source="description" />
-          <TextField source="date" />
+          <DateField source="date" /> - <TextField source="description" />
         </>
       </ReferenceField>
     </Datagrid>

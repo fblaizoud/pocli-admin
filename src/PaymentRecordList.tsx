@@ -1,7 +1,6 @@
 import {
   Datagrid,
   DateField,
-  EmailField,
   List,
   ListProps,
   NumberField,
@@ -13,9 +12,8 @@ const PaymentRecordList = (props: ListProps) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      {/*  sortBy="addresses.id_address" /> */}
       <ReferenceField
-        label="PaymentMethod"
+        label="Moyen de paiement"
         source="idPaymentMethod"
         reference="paymentMethods"
       >
@@ -23,17 +21,21 @@ const PaymentRecordList = (props: ListProps) => (
           <TextField source="name" />
         </>
       </ReferenceField>
-      <NumberField source="checkNumber" />
-      <DateField source="dateStart" />
-      <DateField source="dateEnd" />
-      <NumberField source="amount" />
-      <ReferenceField label="Family" source="idFamily" reference="families">
+      <NumberField source="checkNumber" label="N° de chèque" />
+      <DateField source="dateStart" label="Date de début" />
+      <DateField source="dateEnd" label="Date de fin" />
+      <NumberField
+        source="amount"
+        label="Montant"
+        options={{ style: "currency", currency: "EUR" }}
+      />
+      <ReferenceField label="Famille" source="idFamily" reference="families">
         <>
           <TextField source="name" />
         </>
       </ReferenceField>
       <ReferenceField
-        label="FamilyMember"
+        label="Adhérent"
         source="idFamilyMember"
         reference="familyMembers"
       >
@@ -42,7 +44,7 @@ const PaymentRecordList = (props: ListProps) => (
         </>
       </ReferenceField>
       <ReferenceField
-        label="Activity"
+        label="Activité"
         source="idActivity"
         reference="activities"
       >

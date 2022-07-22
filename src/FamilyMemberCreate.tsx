@@ -3,23 +3,16 @@ import {
   Create,
   SimpleForm,
   TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
   DateInput,
 } from "react-admin";
+import {
+  validateContent,
+  validateMediumStringOnly,
+  validateUrlOptional,
+} from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export default interface IFamily {
   name: string;
@@ -35,13 +28,31 @@ export const FamilyMemberCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="firstname" validate={validatePostalCode} />
-      <ReferenceInput source="idFamily" reference="families" allowEmpty>
+      <ReferenceInput
+        source="idFamily"
+        reference="families"
+        label="Famille"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={optionRenderer} />
       </ReferenceInput>
-      <DateInput source="birthday" validate={validateCity} />
-      <TextInput source="avatar" validate={validateAddress} />
+      <TextInput
+        source="firstname"
+        label="Prénom"
+        validate={validateMediumStringOnly}
+      />
+      <DateInput
+        source="birthday"
+        label="Date d'anniversaire"
+        validate={validateContent}
+      />
+      <TextInput
+        source="avatar"
+        label="Lien d'avatar"
+        validate={validateUrlOptional}
+        allowEmpty
+      />
     </SimpleForm>
   </Create>
 );

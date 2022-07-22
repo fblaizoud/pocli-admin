@@ -5,22 +5,19 @@ import {
   TextInput,
   NumberInput,
   DateInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
   ReferenceInput,
   SelectInput,
+  FormDataConsumer,
 } from "react-admin";
+import {
+  validateContent,
+  validateMediumStringOnly,
+  validateNumber,
+  validateNumberOptional,
+  validateUrl,
+  validateUrlOptional,
+} from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validateAddress: Validator[] = [required(), minLength(2), maxLength(255)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export interface IActivity {
   name: string;
@@ -44,22 +41,74 @@ export const EventCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <NumberInput source="numberParticipantsMax" />
-      <DateInput source="date" />
-      <TextInput source="description" />
-      <TextInput source="text" />
-      <TextInput source="podcastLink" />
-      <NumberInput source="reservedAdherent" />
-      <NumberInput source="price" />
-
-      <ReferenceInput source="idPostType" reference="postTypes" allowEmpty>
+      <NumberInput
+        source="numberParticipantsMax"
+        label="Limite de participants"
+        validate={validateNumberOptional}
+      />
+      <DateInput source="date" validate={validateContent} />
+      <TextInput
+        multiline
+        fullWidth
+        source="description"
+        validate={validateMediumStringOnly}
+      />
+      <TextInput
+        fullWidth
+        multiline
+        source="text"
+        label="Texte"
+        validate={validateContent}
+      />
+      <SelectInput
+        source="reservedAdherent"
+        label="Visibilité"
+        defaultValue={0}
+        choices={[
+          { id: "1", name: "Reservé aux adhérents" },
+          { id: "0", name: "Pour tous" },
+        ]}
+        validate={validateContent}
+      />
+      <NumberInput
+        source="price"
+        label="Prix"
+        validate={validateNumberOptional}
+      />
+      <ReferenceInput
+        label="Type de publication"
+        source="idPostType"
+        reference="postTypes"
+        validate={validateContent}
+      >
         {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
         <SelectInput optionText={postTypeRenderer} />
       </ReferenceInput>
-      <ReferenceInput source="idActivity" reference="activities" allowEmpty>
-        {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
-        <SelectInput optionText={activityRenderer} />
-      </ReferenceInput>
+      <FormDataConsumer>
+        {({ formData, ...rest }) =>
+          formData.idPostType === 1 ? (
+            <ReferenceInput
+              label="Type d'activité"
+              source="idActivity"
+              reference="activities"
+              validate={validateContent}
+              {...rest}
+            >
+              {/* Ceci permet de faire une liste déroulante qui va aller afficher le résultat de la fonction optionRenderer : firstname lastname */}
+              <SelectInput optionText={activityRenderer} />
+            </ReferenceInput>
+          ) : (
+            formData.idPostType === 21 && (
+              <TextInput
+                source="podcastLink"
+                label="Lien de podcast"
+                validate={validateUrl}
+                {...rest}
+              />
+            )
+          )
+        }
+      </FormDataConsumer>
     </SimpleForm>
   </Create>
 );

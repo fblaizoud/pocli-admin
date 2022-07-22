@@ -5,10 +5,9 @@ const AdminList = (props: ListProps) => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       {/*  sortBy="addresses.id_address" /> */}
-      <TextField source="firsname" />
-      <TextField source="lastname" />
+      <TextField source="firstname" label="Prénom" />
+      <TextField source="lastname" label="Nom" />
       <EmailField source="email" />
-      <TextField source="password" />
     </Datagrid>
   </List>
 );

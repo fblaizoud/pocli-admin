@@ -1,23 +1,6 @@
-import {
-  ListProps,
-  Create,
-  SimpleForm,
-  TextInput,
-  regex,
-  Validator,
-  required,
-  minLength,
-  maxLength,
-  ReferenceInput,
-  SelectInput,
-} from "react-admin";
+import { ListProps, Create, SimpleForm, TextInput } from "react-admin";
+import { validateEmail } from "./helpers/Validators";
 import { PostEditActions } from "./PostEditActions";
-
-const validateCity: Validator[] = [required(), minLength(2), maxLength(200)];
-const validatePostalCode: Validator[] = [
-  required(),
-  regex(/^\d{5}$/, "Must be a valid Zip Code"),
-];
 
 export const NewsletterCreate = (props: ListProps) => (
   <Create
@@ -26,7 +9,7 @@ export const NewsletterCreate = (props: ListProps) => (
     {...props}
   >
     <SimpleForm warnWhenUnsavedChanges>
-      <TextInput source="email" />
+      <TextInput source="email" validate={validateEmail} />
     </SimpleForm>
   </Create>
 );
